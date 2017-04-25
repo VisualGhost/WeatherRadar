@@ -11,10 +11,25 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
+    def apiPropFile = rootProject.file('api.properties')
+    def Properties apiProperties = new Properties()
+
+    if (apiPropFile.canRead()) {
+        apiProperties.load(new FileInputStream(apiPropFile))
+    } else {
+        throw new GradleException("API_KEY not found")
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        applicationVariants.all { variant ->
+            variant.buildConfigField "String", "BASE_URL", "\"http://api.openweathermap.org\"";
+            variant.buildConfigField "String", "API_KEY", apiProperties['API_KEY']
         }
     }
 

@@ -10,6 +10,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         Fragment fragment = getFragmentManager().findFragmentById(R.id.map_container);
         if (fragment == null) {
@@ -18,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
             transition.replace(R.id.map_container, new WeatherMap());
             transition.commit();
         }
+
     }
 
     @Override

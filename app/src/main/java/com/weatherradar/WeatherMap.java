@@ -132,6 +132,7 @@ public class WeatherMap extends MapFragment implements OnMapReadyCallback,
             CameraUpdate cu = CameraUpdateFactory.newLatLng(latlng);
 
             mMap.animateCamera(cu);
+
         }
     }
 
