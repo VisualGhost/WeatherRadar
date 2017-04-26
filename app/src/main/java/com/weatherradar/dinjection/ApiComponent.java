@@ -14,6 +14,6 @@ public interface ApiComponent {
 
     RestClientProvider getRestClient();
 
-    void inject(MainActivity mainActivity); // TODO change injectable
+    void inject(MainActivity mainActivity);
 
 }

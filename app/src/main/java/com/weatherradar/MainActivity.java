@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final int WEATHER_LOADER_ID = 1;
     private static final String METRIC = "metric";
-    private static final String SPOTS_NUMBER = "20";
+    private static final String SPOTS_NUMBER = "50";
 
     private static final String LATITUDE_KEY = "latitudeKey";
     private static final String LONGITUDE_KEY = "longitudeKey";
@@ -96,20 +96,21 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        data.moveToFirst();
-        double currentLatitude = data.getDouble(data.getColumnIndex(DBContract.Location.LATITUDE));
-        double currentLongitude = data.getDouble(data.getColumnIndex(DBContract.Location.LONGITUDE));
+        if (data.moveToFirst()) {
+            double currentLatitude = data.getDouble(data.getColumnIndex(DBContract.Location.LATITUDE));
+            double currentLongitude = data.getDouble(data.getColumnIndex(DBContract.Location.LONGITUDE));
 
-        if (BuildConfig.DEBUG) {
-            Log.d(TAG, "Current location: " + currentLatitude + ", " + currentLongitude);
-        }
+            if (BuildConfig.DEBUG) {
+                Log.d(TAG, "Current location: " + currentLatitude + ", " + currentLongitude);
+            }
 
-        if (isLocationTheSame(currentLatitude, currentLongitude)) {
-            return;
-        } else {
-            rememberNewLocation(currentLatitude, currentLongitude);
+            if (isLocationTheSame(currentLatitude, currentLongitude)) {
+                return;
+            } else {
+                rememberNewLocation(currentLatitude, currentLongitude);
+            }
+            getForecast(currentLatitude, currentLongitude);
         }
-        getForecast(currentLatitude, currentLongitude);
     }
 
     private boolean isLocationTheSame(double currentLatitude, double currentLongitude) {

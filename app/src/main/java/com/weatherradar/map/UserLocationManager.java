@@ -5,7 +5,9 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.location.Location;
+import android.util.Log;
 
+import com.weatherradar.BuildConfig;
 import com.weatherradar.CustomApplication;
 import com.weatherradar.content_provider.ProviderContract;
 import com.weatherradar.database.DBContract;
@@ -17,6 +19,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class UserLocationManager {
 
+    private static final String TAG = UserLocationManager.class.getSimpleName();
     private static final double DELTA = 0.01;
 
     private UserLocationManager() {
@@ -24,25 +27,24 @@ public class UserLocationManager {
     }
 
     static void storeCurrentLocation(final Context context, final Location location) {
+        if (BuildConfig.DEBUG) {
+            Log.d(TAG, location.getLatitude() + ", " + location.getLongitude());
+        }
         Observable.create(new ObservableOnSubscribe<Void>() {
             @Override
             public void subscribe(ObservableEmitter<Void> e) throws Exception {
 
                 Cursor cursor = getCursor(context);
-                boolean isNewLocation = isNewLocation(cursor, location);
-
-                if (isNewLocation) {
-
-                    ContentValues contentValues = getContentValues(location);
-
+                ContentValues contentValues = getContentValues(location);
+                if (cursor != null) {
                     if (cursor.getCount() == 0) {
                         insertCurrentLocation(context, contentValues);
                     } else {
-                        updateCurrentLocation(context, contentValues);
+                        boolean isNewLocation = isNewLocation(cursor, location);
+                        if (isNewLocation) {
+                            updateCurrentLocation(context, contentValues);
+                        }
                     }
-                }
-
-                if (cursor != null) {
                     cursor.close();
                 }
 

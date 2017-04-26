@@ -48,7 +48,6 @@ public class WeatherMap extends MapFragment implements OnMapReadyCallback,
     private List<MarkerData> mMarkerDataList;
     private LatLngBounds.Builder mBuilder;
 
-
     public WeatherMap() {
         mCriteria = new Criteria();
         mMarkerDataList = new ArrayList<>();
@@ -119,11 +118,14 @@ public class WeatherMap extends MapFragment implements OnMapReadyCallback,
         mLocationManager = (LocationManager) getContext()
                 .getSystemService(LOCATION_SERVICE);
         mCriteria.setAccuracy(Criteria.ACCURACY_FINE);
+
         requestLocationUpdates();
 
         map.setLocationSource(this);
         map.setMyLocationEnabled(true);
         map.getUiSettings().setMyLocationButtonEnabled(true);
+
+        boolean isMarkerExist = mMarkerDataList != null && mMarkerDataList.size() > 0;
 
         if (mMarkerDataList != null) {
             for (MarkerData data : mMarkerDataList) {
@@ -132,7 +134,9 @@ public class WeatherMap extends MapFragment implements OnMapReadyCallback,
             mMarkerDataList.clear();
         }
 
-        showAllMarkers(map);
+        if (isMarkerExist) {
+            showAllMarkers(map);
+        }
 
     }
 
@@ -150,13 +154,6 @@ public class WeatherMap extends MapFragment implements OnMapReadyCallback,
                     map.moveCamera(cameraUpdate);
                 }
             });
-        }
-    }
-
-    @SuppressWarnings("MissingPermission")
-    private void requestLocationUpdates() {
-        if (mLocationManager != null) {
-            mLocationManager.requestLocationUpdates(0L, 0.0f, mCriteria, this, null);
         }
     }
 
@@ -207,6 +204,13 @@ public class WeatherMap extends MapFragment implements OnMapReadyCallback,
     }
 
     @SuppressWarnings("MissingPermission")
+    private void requestLocationUpdates() {
+        if (mLocationManager != null) {
+            mLocationManager.requestLocationUpdates(0L, 0.0f, mCriteria, this, null);
+        }
+    }
+
+    @SuppressWarnings("MissingPermission")
     @Override
     public void onPause() {
         super.onPause();
@@ -232,6 +236,9 @@ public class WeatherMap extends MapFragment implements OnMapReadyCallback,
             mMap.clear();
             if (cursor != null) {
                 convertCursorToMarkers(cursor);
+                if (cursor.getCount() > 0) {
+                    showAllMarkers(mMap);
+                }
             }
         } else {
             convertCursorToList(cursor);

@@ -8,7 +8,6 @@ import com.weatherradar.dinjection.DaggerApiComponent;
 import com.weatherradar.networking.RestClientProvider;
 
 import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class CustomApplication extends Application {
@@ -32,7 +31,8 @@ public class CustomApplication extends Application {
         return mApiComponent;
     }
 
-    public Executor getDbExecutor(){
+    public Executor getDbExecutor() {
         return mDbExecutor;
     }
+
 }
