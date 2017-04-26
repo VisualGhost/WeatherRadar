@@ -172,7 +172,7 @@ public class WeatherMap extends MapFragment implements OnMapReadyCallback,
         if (mapLocationListener != null) {
             mapLocationListener.onLocationChanged(location);
 
-            UserLocationManager.storeCurrentLocation(getContext().getApplicationContext(), location);
+            UserLocationUtils.storeCurrentLocation(getContext().getApplicationContext(), location);
         }
     }
 

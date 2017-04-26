@@ -17,12 +17,12 @@ import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.schedulers.Schedulers;
 
-public class UserLocationManager {
+public class UserLocationUtils {
 
-    private static final String TAG = UserLocationManager.class.getSimpleName();
+    private static final String TAG = UserLocationUtils.class.getSimpleName();
     private static final double DELTA = 0.01;
 
-    private UserLocationManager() {
+    private UserLocationUtils() {
         // hide
     }
 
