@@ -25,4 +25,6 @@ public class GeoSpot {
     public WeatherData getWeatherData() {
         return mWeatherData;
     }
+
+
 }

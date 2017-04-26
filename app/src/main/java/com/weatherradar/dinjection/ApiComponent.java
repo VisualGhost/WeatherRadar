@@ -2,7 +2,6 @@ package com.weatherradar.dinjection;
 
 
 import com.weatherradar.MainActivity;
-import com.weatherradar.WeatherMap;
 import com.weatherradar.networking.RestClientProvider;
 
 import javax.inject.Singleton;
@@ -15,6 +14,6 @@ public interface ApiComponent {
 
     RestClientProvider getRestClient();
 
-    void inject(WeatherMap weatherMap); // TODO change injectable
+    void inject(MainActivity mainActivity); // TODO change injectable
 
 }

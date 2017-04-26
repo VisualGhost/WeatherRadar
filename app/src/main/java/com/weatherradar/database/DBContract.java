@@ -9,7 +9,7 @@ public class DBContract {
 
     public interface Table {
         String LOCATION = "location";
-        String FORECAST = "beer";
+        String FORECAST = "forecast";
     }
 
     public interface Location {

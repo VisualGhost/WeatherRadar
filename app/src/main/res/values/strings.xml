@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">WeatherRadar</string>
+    <string name="update">Update</string>
+    <string name="celsius">%s \u2103</string>
 </resources>
